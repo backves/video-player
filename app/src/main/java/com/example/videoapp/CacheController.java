@@ -24,11 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @UnstableApi
 public class CacheController {
-    private Cache cache;
-    private CacheDataSource.Factory cacheDataSourceFactory;
-    private CacheDataSource cacheDataSource;
+    private final Cache cache;
+    private final CacheDataSource.Factory cacheDataSourceFactory;
+    private final CacheDataSource cacheDataSource;
 
-    private ConcurrentHashMap<String, CacheWriter> cacheTask = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, CacheWriter> cacheTask = new ConcurrentHashMap<>();
 
 
     File cacheParentDirectory;

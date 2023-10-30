@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding viewBinding;
     private PlayerView playerView;
 
-    private String loop = "http://111.229.87.59/norctune%20loop.mp4";
-    private String mini = "https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4";
+    private final String loop = "http://111.229.87.59/norctune%20loop.mp4";
+    private final String mini = "https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4";
 
 
     @Override
