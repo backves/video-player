@@ -2,6 +2,7 @@ package com.example.videoapp;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.datasource.DataSpec;
@@ -40,7 +41,7 @@ public class CacheController {
         }
         cache = new SimpleCache(
                 new File(cacheParentDirectory, "example_media_cache"),
-                new LeastRecentlyUsedCacheEvictor(100 * 1024 * 1024),
+                new LeastRecentlyUsedCacheEvictor(300 * 1024 * 1024),
                 new CacheDatabaseHelper(context));
         cacheDataSourceFactory = new CacheDataSource.Factory()
                 .setCache(cache)
@@ -76,6 +77,7 @@ public class CacheController {
                 );
                 cacheWriter.cache();
                 cacheController.cacheTask.put(mediaUrl, cacheWriter);
+                Log.d("cache", "cache beginning");
             }
         }
     }

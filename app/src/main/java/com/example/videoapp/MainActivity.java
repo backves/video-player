@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.PlaybackException;
 import androidx.media3.common.Player;
+import androidx.media3.common.util.Log;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
@@ -16,13 +17,19 @@ import android.os.Bundle;
 
 import com.example.videoapp.databinding.ActivityMainBinding;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 @UnstableApi
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private ActivityMainBinding viewBinding;
     private PlayerView playerView;
+
+    private String loop = "http://111.229.87.59/norctune%20loop.mp4";
+    private String mini = "https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4";
 
 
     @Override
@@ -33,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET};
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_STORAGE_PERMISSION);
+
+        CacheController.init(this);
+        cacheVideo(mini);
 
         playerView = viewBinding.player;
         playVideo();
@@ -66,11 +76,26 @@ public class MainActivity extends AppCompatActivity {
 
         player.stop();
 
-        player.addMediaItem(MediaItem.fromUri("http://111.229.87.59/norctune%20loop.mp4"));
-        player.addMediaItem(MediaItem.fromUri("https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4"));
+
+        Log.d("video", "playing");
+        player.addMediaItem(MediaItem.fromUri(loop));
+        player.addMediaItem(MediaItem.fromUri(mini));
 //        player.addMediaItem(MediaItem.fromUri("http://111.229.87.59/video.mp4"));
 
         player.prepare();
+    }
+
+    private void cacheVideo(String url) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                ArrayList<String> arrayList = new ArrayList<>();
+                arrayList.add(url);
+                CacheController.cacheMedia(arrayList);
+                Log.d("cache", "cache running");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
