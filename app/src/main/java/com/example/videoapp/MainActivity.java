@@ -35,51 +35,17 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_STORAGE_PERMISSION);
 
         playerView = viewBinding.player;
-
-//        new NetworkTask().execute();
-
         playVideo();
-
-//        Log.d("dir", this.getCacheDir() + "/video.mp4");
-//        new NetworkTask().execute();
-
     }
 
     private void playVideo() {
-//        File cacheParentDirectory;
-//        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-//            cacheParentDirectory = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), getPackageName());
-//        } else {
-//            cacheParentDirectory = new File(getFilesDir(), getPackageName());
-//        }
-//        SimpleCache cache = new SimpleCache(new File(cacheParentDirectory, "example_media_cache"), new LeastRecentlyUsedCacheEvictor(100 * 1024 * 1024), new CacheDatabaseHelper(MainActivity.this));
-//        CacheDataSource.Factory cacheDataSourceFactory = new CacheDataSource.Factory()
-//                .setCache(cache)
-//                .setUpstreamDataSourceFactory(new DefaultHttpDataSource.Factory()
-//                        .setAllowCrossProtocolRedirects(true));
-
         ExoPlayer player = new ExoPlayer.Builder(MainActivity.this)
                 .setMediaSourceFactory(Objects.requireNonNull(CacheController.getMediaSourceFactory()))
-//                .setMediaSourceFactory(new ProgressiveMediaSource.Factory((DataSource.Factory) Objects.requireNonNull(cacheDataSourceFactory)))
                 .build();
         player.addListener(new Player.Listener() {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
                 Player.Listener.super.onPlaybackStateChanged(playbackState);
-//                switch (playbackState) {
-//                    case Player.STATE_IDLE: {
-//                        break;
-//                    }
-//                    case Player.STATE_BUFFERING: {
-//                        break;
-//                    }
-//                    case Player.STATE_READY: {
-//                        break;
-//                    }
-//                    case Player.STATE_ENDED: {
-//
-//                    }
-//                }
             }
 
             @Override
@@ -102,51 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         player.addMediaItem(MediaItem.fromUri("http://111.229.87.59/norctune%20loop.mp4"));
         player.addMediaItem(MediaItem.fromUri("https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4"));
-
 //        player.addMediaItem(MediaItem.fromUri("http://111.229.87.59/video.mp4"));
 
         player.prepare();
     }
-
-//    private class NetworkTask extends AsyncTask<Void, Void, String> {
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            ArrayList<String> strings = new ArrayList<>();
-//            strings.add("https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4");
-//            strings.add("http://111.229.87.59/norctune%20loop.mp4");
-//            strings.add("http://111.229.87.59/video.mp4");
-//            try {
-//                CacheController.cacheMedia(strings);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            playVideo();
-//        }
-//    }
-//
-//    private class NetworkTask extends AsyncTask<Void, Void, String> {
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            playVideo();
-//            OkHttpHelper okHttpHelper = new OkHttpHelper();
-//            okHttpHelper.downloadFile("http://111.229.87.59/video.mp4", MainActivity.this.getFilesDir() + "/video.mp4");
-//            while (!okHttpHelper.ifFinish()) {
-//            }
-//            Log.d("Async okhttp", "finish");
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            File videoFile = new File(getFilesDir(), "video.mp4");
-//            String videoPath = videoFile.getAbsolutePath();
-//        }
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
