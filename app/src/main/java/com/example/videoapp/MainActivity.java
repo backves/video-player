@@ -20,6 +20,7 @@ import com.example.videoapp.databinding.ActivityMainBinding;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @UnstableApi
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private ActivityMainBinding viewBinding;
     private PlayerView playerView;
+
+    private ExecutorService executorService;
 
     private final String loop = "http://111.229.87.59/norctune%20loop.mp4";
     private final String mini = "https://minigame.vip/Uploads/images/2021/09/18/1631951892_page_img.mp4";
@@ -86,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cacheVideo(String url) {
-        Executors.newSingleThreadExecutor().execute(() -> {
+        executorService.shutdown();
+        executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(() -> {
             try {
                 ArrayList<String> arrayList = new ArrayList<>();
                 arrayList.add(url);
