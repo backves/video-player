@@ -89,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cacheVideo(String url) {
-        executorService.shutdown();
+        if (executorService != null) {
+            executorService.shutdown();
+        }
         executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             try {
@@ -130,5 +132,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Objects.requireNonNull(playerView.getPlayer()).release();
     }
 }

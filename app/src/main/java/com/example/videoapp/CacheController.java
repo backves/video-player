@@ -70,7 +70,7 @@ public class CacheController {
                         cacheController.cacheDataSource,
                         new DataSpec.Builder()
                                 .setUri(mediaUrl)
-                                .setLength((long) (cacheController.getMediaResourceSize(mediaUrl) * 0.1))
+                                .setLength((long) (cacheController.getMediaResourceSize(mediaUrl)))
                                 .build(),
                         null, (requestLength, bytesCached, newBytesCached) -> {
                 }
